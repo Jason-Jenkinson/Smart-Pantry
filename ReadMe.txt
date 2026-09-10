@@ -1,0 +1,1 @@
+The smart pantry manager help you reduce food waste by tracking ingredients in your pantry and suggest recipes to cook using those left overs. This app allows you to see what recipes you can make with only the ingredients in your pantry, or what recipes you could make if you have just one ingredient missing.
