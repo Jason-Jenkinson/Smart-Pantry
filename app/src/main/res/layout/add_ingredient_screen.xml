@@ -2,40 +2,73 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="24dp"
+        android:text="Add Ingredient"
+        android:textAlignment="center"
+        android:textSize="30sp" />
 
     <EditText
         android:id="@+id/ETT_IngredientName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
         android:ems="10"
-        android:inputType="text"
-        android:text="Ingredient Name" />
+        android:hint="Ingredient name"
+        android:inputType="text" />
 
-    <EditText
-        android:id="@+id/ETT_Quantity"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:ems="10"
-        android:inputType="text"
-        android:text="Quantity" />
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/ETT_Quantity"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
+            android:hint="Quantity"
+            android:inputType="numberDecimal" />
+
+        <EditText
+            android:id="@+id/ETT_UnityType"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
+            android:hint="Unit (ml, grams, items)"
+            android:inputType="text" />
+
+    </LinearLayout>
 
     <EditText
-        android:id="@+id/ETT_UnityType"
+        android:id="@+id/ETT_ExpiryDate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
         android:ems="10"
-        android:inputType="text"
-        android:text="Unit type (ml, grams, items)" />
+        android:focusable="false"
+        android:hint="Expiry date (optional) - tap to pick"
+        android:inputType="none" />
 
     <Button
         android:id="@+id/btn_Save"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
+        android:layout_marginTop="24dp"
         android:text="Save" />
+
+    <Button
+        android:id="@+id/btn_Delete"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Delete"
+        android:visibility="gone" />
 
 </LinearLayout>
