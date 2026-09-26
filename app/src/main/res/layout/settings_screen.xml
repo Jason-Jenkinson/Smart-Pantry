@@ -6,25 +6,23 @@
     android:padding="16dp">
 
     <TextView
-        android:id="@+id/textView4"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="Suggested Recipes"
+        android:text="Settings"
         android:textAlignment="center"
-        android:textSize="34sp" />
+        android:textSize="30sp"
+        android:paddingBottom="24dp" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:layout_weight="2" />
-
-    <TextView
-        android:id="@+id/textView5"
+    <CheckBox
+        android:id="@+id/checkExpiringSoon"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="No recipes Match your ingredients" />
+        android:text="Expiring-soon alerts" />
+
+    <CheckBox
+        android:id="@+id/checkMetricUnits"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Use metric units" />
 
 </LinearLayout>
