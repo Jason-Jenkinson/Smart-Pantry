@@ -93,32 +93,8 @@ public class RecipeMatcher {
 
     private static boolean unitsMatch(String unitA, String unitB) {
         if (unitA == null || unitB == null) return false;
-        return normalizeUnit(unitA).equals(normalizeUnit(unitB));
+        return unitA.equals(unitB);
     }
 
-    //normalizer to ensure simple missmatches are classes as the same unit.
-    private static String normalizeUnit(String unit) {
-        String normalized = unit.trim().toLowerCase(Locale.ROOT);
-        switch (normalized) {
-            case "g":
-            case "gram":
-            case "grams":
-                return "grams";
-            case "ml":
-            case "milliliter":
-            case "milliliters":
-            case "millilitre":
-            case "millilitres":
-                return "ml";
-            case "item":
-            case "items":
-            case "piece":
-            case "pieces":
-            case "pc":
-            case "pcs":
-                return "items";
-            default:
-                return normalized;
-        }
-    }
+
 }

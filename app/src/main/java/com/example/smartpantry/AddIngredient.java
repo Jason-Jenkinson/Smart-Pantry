@@ -3,8 +3,10 @@ package com.example.smartpantry;
 import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -13,7 +15,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.smartpantry.model.PantryItem;
 
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Locale;
 
 public class AddIngredient extends AppCompatActivity {
@@ -30,10 +34,16 @@ public class AddIngredient extends AppCompatActivity {
 
         EditText ingredientNameEditText = findViewById(R.id.ETT_IngredientName);
         EditText quantityEditText = findViewById(R.id.ETT_Quantity);
-        EditText unitEditText = findViewById(R.id.ETT_UnityType);
+        Spinner unitSpinner = findViewById(R.id.spinner);
         expiryDateEditText = findViewById(R.id.ETT_ExpiryDate);
         Button saveButton = findViewById(R.id.btn_Save);
         Button deleteButton = findViewById(R.id.btn_Delete);
+
+        List<String> unitOptions = Arrays.asList("grams", "ml", "items", "slices", "leaves");
+        ArrayAdapter<String> unitAdapter = new ArrayAdapter<>(this,
+                android.R.layout.simple_spinner_item, unitOptions);
+        unitAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        unitSpinner.setAdapter(unitAdapter);
 
         itemId = getIntent().getLongExtra(EXTRA_ITEM_ID, -1);
         if (itemId != -1) {
@@ -47,7 +57,11 @@ public class AddIngredient extends AppCompatActivity {
             ((TextView) findViewById(R.id.textView2)).setText("Edit Ingredient");
             ingredientNameEditText.setText(existingItem.getName());
             quantityEditText.setText(String.valueOf(existingItem.getQuantity()));
-            unitEditText.setText(existingItem.getUnit());
+            String existingUnit = existingItem.getUnit();
+            int existingUnitPosition = unitOptions.indexOf(existingUnit);
+            if (existingUnitPosition >= 0) {
+                unitSpinner.setSelection(existingUnitPosition);
+            }
             expiryDateEditText.setText(existingItem.getExpiryDate());
             saveButton.setText("Update");
             deleteButton.setVisibility(View.VISIBLE);
@@ -70,7 +84,7 @@ public class AddIngredient extends AppCompatActivity {
         saveButton.setOnClickListener(v -> {
             String name = ingredientNameEditText.getText().toString().trim();
             String quantityText = quantityEditText.getText().toString().trim();
-            String unit = unitEditText.getText().toString().trim();
+            String unit = unitSpinner.getSelectedItem() == null ? "" : unitSpinner.getSelectedItem().toString().trim();
             String expiry = expiryDateEditText.getText().toString().trim();
 
             if (name.isEmpty()) {
@@ -101,8 +115,8 @@ public class AddIngredient extends AppCompatActivity {
             }
 
             if (unit.isEmpty()) {
-                unitEditText.setError("Unit is required");
-                unitEditText.requestFocus();
+                Toast.makeText(this, "Please choose a unit", Toast.LENGTH_SHORT).show();
+                unitSpinner.requestFocus();
                 return;
             }
 
