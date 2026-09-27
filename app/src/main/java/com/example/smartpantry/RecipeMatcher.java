@@ -28,6 +28,33 @@ public class RecipeMatcher {
         return suggestions;
     }
 
+    public static List<Recipe> getSuggestedAlmostRecpes(List<Recipe> allRecipes, List<PantryItem> pantry) {
+        List<Recipe> suggestions = new ArrayList<>();
+        if (allRecipes == null) {
+            return suggestions;
+        }
+
+        for (Recipe recipe : allRecipes) {
+            if (recipe == null || canMake(recipe, pantry)) {
+                continue;
+            }
+
+            int missingIngredients = 0;
+            if (recipe.getIngredients() != null) {
+                for (RecipeIngredient neededIngredient : recipe.getIngredients()) {
+                    if (!pantryHasEnough(pantry, neededIngredient)) {
+                        missingIngredients++;
+                    }
+                }
+            }
+
+            if (missingIngredients == 1) {
+                suggestions.add(recipe);
+            }
+        }
+        return suggestions;
+    }
+
     //checks if theres the required ingredients with the right amounts the the pantry
     public static boolean canMake(Recipe recipe, List<PantryItem> pantry) {
         List<RecipeIngredient> required = recipe.getIngredients();

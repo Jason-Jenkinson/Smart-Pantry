@@ -20,9 +20,8 @@ import java.util.List;
 public class SuggestedRecipes extends AppCompatActivity {
 
     private RecipeAdapter adapter;
+    private RecipeAdapter almostThereAdapter;
     private TextView emptyText;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,10 +29,16 @@ public class SuggestedRecipes extends AppCompatActivity {
         setContentView(R.layout.suggested_recipes_screen);
 
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
+        RecyclerView almostRecyclerView = findViewById(R.id.recyclerView2);
         emptyText = findViewById(R.id.textView5);
+
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new RecipeAdapter(new ArrayList<>());
         recyclerView.setAdapter(adapter);
+
+        almostRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        almostThereAdapter = new RecipeAdapter(new ArrayList<>());
+        almostRecyclerView.setAdapter(almostThereAdapter);
 
         loadSuggestions();
     }
@@ -48,13 +53,16 @@ public class SuggestedRecipes extends AppCompatActivity {
         List<Recipe> allRecipes = DBHelper.getInstance(getApplicationContext()).getAllRecipesWithIngredients();
         List<PantryItem> pantry = DBHelper.getInstance(getApplicationContext()).getAllPantryItems();
         List<Recipe> matches = RecipeMatcher.getSuggestedRecipes(allRecipes, pantry);
+        List<Recipe> almostThere = RecipeMatcher.getSuggestedAlmostRecpes(allRecipes, pantry);
 
         android.util.Log.d("SuggestedRecipesDebug", "Total recipes: " + allRecipes.size() +
-                ", Pantry items: " + pantry.size() + ", Matched recipes: " + matches.size());
+                ", Pantry items: " + pantry.size() + ", Matched recipes: " + matches.size() +
+                ", Almost there recipes: " + almostThere.size());
 
         adapter.setItems(matches);
+        almostThereAdapter.setItems(almostThere);
 
-        if (matches.isEmpty()) {
+        if (matches.isEmpty() && almostThere.isEmpty()) {
             emptyText.setVisibility(View.VISIBLE);
             emptyText.setText("No recipes match your pantry yet - add more ingredients");
         } else {
@@ -78,7 +86,7 @@ public class SuggestedRecipes extends AppCompatActivity {
         @Override
         public RecipeViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             View view = LayoutInflater.from(parent.getContext())
-                    .inflate(android.R.layout.simple_list_item_1, parent, false);
+                    .inflate(R.layout.suggest_recipes_item_row, parent, false);
             return new RecipeViewHolder(view);
         }
 
@@ -117,7 +125,7 @@ public class SuggestedRecipes extends AppCompatActivity {
 
             RecipeViewHolder(View itemView) {
                 super(itemView);
-                textView = itemView.findViewById(android.R.id.text1);
+                textView = itemView.findViewById(R.id.textViewItem);
             }
         }
     }
