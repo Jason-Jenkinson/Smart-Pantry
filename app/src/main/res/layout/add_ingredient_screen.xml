@@ -12,7 +12,8 @@
         android:paddingBottom="24dp"
         android:text="Add Ingredient"
         android:textAlignment="center"
-        android:textSize="30sp" />
+        android:textSize="30sp"
+        android:textStyle="bold" />
 
     <EditText
         android:id="@+id/ETT_IngredientName"
@@ -61,7 +62,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:text="Save" />
+        android:backgroundTint="#3BAEE6"
+        android:text="Save"
+        android:textColorLink="#2196F3" />
 
     <Button
         android:id="@+id/btn_Delete"

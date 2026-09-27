@@ -22,6 +22,8 @@ public class SuggestedRecipes extends AppCompatActivity {
     private RecipeAdapter adapter;
     private TextView emptyText;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,6 +48,9 @@ public class SuggestedRecipes extends AppCompatActivity {
         List<Recipe> allRecipes = DBHelper.getInstance(getApplicationContext()).getAllRecipesWithIngredients();
         List<PantryItem> pantry = DBHelper.getInstance(getApplicationContext()).getAllPantryItems();
         List<Recipe> matches = RecipeMatcher.getSuggestedRecipes(allRecipes, pantry);
+
+        android.util.Log.d("SuggestedRecipesDebug", "Total recipes: " + allRecipes.size() +
+                ", Pantry items: " + pantry.size() + ", Matched recipes: " + matches.size());
 
         adapter.setItems(matches);
 
