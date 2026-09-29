@@ -92,12 +92,18 @@ public class AddIngredient extends AppCompatActivity {
                 ingredientNameEditText.requestFocus();
                 return;
             }
+            if (name.codePoints().anyMatch(Character::isDigit)) {
+                ingredientNameEditText.setError("Ingredient name cannot contain numbers");
+                ingredientNameEditText.requestFocus();
+                return;
+            }
 
             if (quantityText.isEmpty()) {
                 quantityEditText.setError("Quantity is required");
                 quantityEditText.requestFocus();
                 return;
             }
+            
 
             double quantity;
             try {
